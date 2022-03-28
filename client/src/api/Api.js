@@ -18,11 +18,11 @@ export const createPostsApi = async (posts) =>
     url: "/",
 });
 
-export const deletePostsApi = async (title) =>
+export const deletePostsApi = async (data) =>
   await collegeInstance.request({
     method: "DELETE",
-    data: title,
-    url: "/",
+    data: data,
+    url: "/deletePost",
 });
 
 
@@ -45,7 +45,7 @@ export const updatePostsApi = async (data) =>
 
 // export const deletePostsApi = async (id) =>
 // await axios
-//   .delete(`http://localhost:8000/posts/${id}`)
+//   .delete(`http://localhost:8000/posts/deletePost/${id}`)
 //   .then((res) => res)
 //   .catch((err) => err);
 // export const deletePostsApi = (id)=> axios.delete(`${collegeInstance}/${id}`);

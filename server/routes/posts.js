@@ -3,8 +3,8 @@ import { getPosts, createPosts, deletedPosts,updatePosts } from "../controller/p
 const router = express.Router();
 
 router.get("/", getPosts);
-// router.post("/", createPosts);
-router.delete('/', deletedPosts);
+router.post("/", createPosts);
+router.delete('/deletePost', deletedPosts);
 router.post('/updatePost', updatePosts);
 
 export default router;

@@ -7,12 +7,11 @@ import { getPosts } from "../../redux/actions/posts";
 
 function Posts({posts=[],setCurrentId}) {
     const classes = useStyle();
-    // let posts =  props.data;
     console.log("POSTS ",posts);
     return (
         !posts && !posts && !posts.length > 0  ? <CircularProgress /> :(
         <Grid container spacing={3} className={classes.mainContainer} alignItems="stretch">
-            {posts?.map((post) => (
+            { posts?.map((post) => (
                 <Grid   key={post._id} item xs={12} sm={6} md={6}>
                     <Post post={post} setCurrentId={setCurrentId} />
                 </Grid>
@@ -24,7 +23,7 @@ function Posts({posts=[],setCurrentId}) {
 
 const mapStateToProps = (state) => {
     return {
-      posts: state?.posts?.payload ,
+      posts: state.data.posts,
     };
   };
   const mapDispatchToProps = (dispatch) => {

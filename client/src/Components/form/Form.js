@@ -3,7 +3,7 @@ import { TextField, Paper, Button, Typography } from "@mui/material";
 import FileBase from "react-file-base64";
 import useStyle from "./style";
 import { connect, useSelector } from "react-redux";
-import { createPosts, updatePosts,getPosts } from "../../redux/actions/posts";
+import { createPosts, updatePosts, getPosts } from "../../redux/actions/posts";
 
 function Form({ currentId, setCurrentId, createPosts, updatePosts }) {
   const [postData, setPostData] = useState({
@@ -13,33 +13,34 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts }) {
     tags: "",
     selectedFile: "",
   });
-  const [title,setTitle] = useState(null);
   const classes = useStyle();
   // let getPost = posts;
   // getPost.map((p)=>p.message);
   // console.log(getPost, "getPost");
   const post = useSelector((state) =>
-    currentId ? state.posts.payload.find((message) => message._id === currentId) : null
+    currentId
+      ? state.data.posts.find((message) => message._id === currentId)
+      : null
   );
   console.log(post, "post");
-  // console.log(currentId);
+  console.log(currentId);
   // const post = (currentId ? props.posts.find((message)=>message._id === currentId):null);
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
 
-  const handleSubmite = async(e) => {
+  const handleSubmite = async (e) => {
     e.preventDefault();
     if (currentId) {
-     let newObj = {...postData};
-    // await props.updateStudent(newObj);
-      await  updatePosts(newObj);
+      let newObj = { ...postData };
+      // await props.updateStudent(newObj);
+      await updatePosts(newObj);
       //  await getPosts();
-        clear();
-      } else {
-        createPosts(postData);
-        clear();
-      }
+      clear();
+    } else {
+      await createPosts(postData);
+      clear();
+    }
   };
   const clear = () => {
     setCurrentId(0);
@@ -133,15 +134,14 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts }) {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts,
+    posts: state.data.posts,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPosts: (posts) => dispatch(createPosts(posts)),
+    createPosts: (data) => dispatch(createPosts(data)),
     updatePosts: (data) => dispatch(updatePosts(data)),
-    getPosts: (posts) => dispatch(getPosts(posts)),
-
+    getPosts: (data) => dispatch(getPosts(data)),
   };
 };
 

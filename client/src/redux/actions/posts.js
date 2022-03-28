@@ -82,11 +82,11 @@ export const deletePosts = (data) => {
     };
 };
 
-export const deletePostsSuccess = (id) => {
+export const deletePostsSuccess = (data) => {
     debugger
     return {
         type: types.DELETE_POSTS_SUCCESS,
-        payload:id,
+        payload:data,
     };
 };
 

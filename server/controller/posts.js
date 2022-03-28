@@ -17,30 +17,19 @@ export const createPosts = async (req, res) => {
     await newPost.save();
 
     console.log("newPost", newPost);
-    res.status(201).json(newPost);
+    res.status(200).json(newPost);
   } catch (error) {
     res.status(409).json({ error: error.message });
   }
 };
 
 export const deletedPosts = async (req, res) => {
-  // try {
-  //   const { id } = req.params;
-
-  //   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-
-  //   await PostMessage.findByIdAndRemove(id);
-
-  //   console.log("delete");
-  //   res.json({ message: "Post deleted successfully." });
-  // } catch (error) {
-  //   console.log(error);
-  // }
   try {
-    if (req.body && req.body.title) {
-      const { title } = req.body;
-      let deletePost = await PostMessage.findOneAndDelete({
-        title: title,
+    if (req.body && req.body.id) {
+      const { id } = req.body;
+      console.log("req.body",id);
+      let deletePost = await PostMessage.findByIdAndRemove({
+        _id:id
       })
         .clone()
         .catch(function (err) {
@@ -54,7 +43,7 @@ export const deletedPosts = async (req, res) => {
       }
     } else {
       return res.status(400).send({
-        error: "title not found!!",
+        error: "id not found!!",
       });
     }
   } catch (error) {

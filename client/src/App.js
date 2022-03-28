@@ -41,7 +41,7 @@ function App(props) {
 // export default App;
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts.payload,
+    posts: state.data.posts,
   };
 };
 const mapDispatchToProps = (dispatch) => {

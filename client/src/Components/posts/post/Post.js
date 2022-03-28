@@ -11,13 +11,13 @@ import { deletePosts } from '../../../redux/actions/posts';
 function Post({post,setCurrentId,deletedPosts}) {
     console.log(post);
     const classes = useStyle();
-    const title = {};
-    const handleDelete = (title, e) => {
+    const handleDelete = (_id, e) => {
         if (e) {
           e.preventDefault();
         }
-        deletedPosts(title);
-        // props.getMyStudent(collegeName);
+        let data = {};
+        data.id = _id;
+        deletedPosts(data);
       };
     return (
         <>
@@ -33,7 +33,7 @@ function Post({post,setCurrentId,deletedPosts}) {
                 </Button>
             </div>
             <div className={classes.details}> 
-                <Typography variant="body2" color="textSecondary">{post.tags}</Typography>
+                <Typography variant="body2" color="textSecondary">{post.tags.map((tag) => `#${tag} `)}</Typography>
             </div>
             <Typography className={classes.title} gutterBottom variant="h5" component="h2">{post.title}</Typography>
             <CardContent>
@@ -45,7 +45,7 @@ function Post({post,setCurrentId,deletedPosts}) {
                     Like
                     {post.likeCount}
                 </Button>
-                <Button size="small" color="primary" onClick={()=>{handleDelete(title)}}>
+                <Button size="small" color="primary" onClick={()=>{handleDelete(post._id)}}>
                     <DeleteIcon fontSize="small" />
                     Delete
                 </Button>
@@ -59,7 +59,7 @@ function Post({post,setCurrentId,deletedPosts}) {
 
 const mapStateToProps = (state) => {
     return {
-    //   posts: state.posts && state.posts.payload,
+      posts: state.data.posts,
     };
 };
   const mapDispatchToProps = (dispatch) => {

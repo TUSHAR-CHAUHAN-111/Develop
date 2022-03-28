@@ -13,7 +13,7 @@ import {
 } from "../actions/posts";
 import { fetchPostsApi, createPostsApi,updatePostsApi, deletePostsApi } from "../../api/Api";
 import {select } from 'redux-saga/effects'
-function* getPostsReq(action) {
+function* getPostsReq(action) { 
   try {
     const postsData = yield call(fetchPostsApi, action.payload);
     let {data} = postsData;
@@ -31,7 +31,7 @@ function* getPostsReq(action) {
 function* createPostsReq(action) {
   try { 
     const createPost = yield call(createPostsApi, action.payload);
-    const { data } = createPost;
+    let { data } = createPost;
     if (createPost.status === 200) {
       yield put(createPostsSuccess(data));
     } else {
