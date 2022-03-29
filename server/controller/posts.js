@@ -15,9 +15,8 @@ export const createPosts = async (req, res) => {
     const post = req.body;
     const newPost = new PostMessage(post);
     await newPost.save();
-
-    console.log("newPost", newPost);
-    res.status(200).json(newPost);
+    const allPost = await PostMessage.find();
+    res.status(200).json(allPost);
   } catch (error) {
     res.status(409).json({ error: error.message });
   }
@@ -27,9 +26,9 @@ export const deletedPosts = async (req, res) => {
   try {
     if (req.body && req.body.id) {
       const { id } = req.body;
-      console.log("req.body",id);
+      console.log("req.body", id);
       let deletePost = await PostMessage.findByIdAndRemove({
-        _id:id
+        _id: id,
       })
         .clone()
         .catch(function (err) {
@@ -37,9 +36,8 @@ export const deletedPosts = async (req, res) => {
         });
 
       if (deletePost) {
-        return res.status(200).send({
-          msg: "Post deleted Successfully!!",
-        });
+        const allPost = await PostMessage.find();
+        res.status(200).json(allPost);
       }
     } else {
       return res.status(400).send({
@@ -73,38 +71,34 @@ export const deletedPosts = async (req, res) => {
 //   }
 // };
 
-export const updatePosts = async(req,res) =>{
-  console.log('in  updatepost api ')
-    // const {id:_id} = req.params;
-    // const postData  = req.body;
-    // if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("no post with that id");
-  
-    // const updatedPost = await PostMessage.findByIdAndUpdate(_id,postData,{new:true});
-    // console.log("updatedPost",updatedPost);
-    // res.json(updatedPost);
-    console.log('req.body.updateData: ', req.body);
-    try {
-      const {title,message,creator,tags,selectedFile,_id} = req.body;
-      console.log('req.body.updateData: ', req.body.updateData);
-      const updatedPost = await PostMessage.findByIdAndUpdate(
-        _id,
-        {
-          message,
-          tags,
-          selectedFile,
-          creator,
-          title
-        }
-      ).catch((error )=>console.log('error in query ',error));
-      if(updatedPost){
-        return res.status(200).send({
-          msg: "posts updated Successfully!!",
-        });
-      }
-    } catch (error) {
-      console.log('error from controller ',error);
-        return res.status(400).send({
-          error:error,
-        });
+export const updatePosts = async (req, res) => {
+  console.log("in  updatepost api ");
+  // const {id:_id} = req.params;
+  // const postData  = req.body;
+  // if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("no post with that id");
+
+  // const updatedPost = await PostMessage.findByIdAndUpdate(_id,postData,{new:true});
+  // console.log("updatedPost",updatedPost);
+  // res.json(updatedPost);
+  console.log("req.body.updateData: ", req.body);
+  try {
+    const { title, message, creator, tags, selectedFile, _id } = req.body;
+    console.log("req.body.updateData: ", req.body.updateData);
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {
+      message,
+      tags,
+      selectedFile,
+      creator,
+      title,
+    }).catch((error) => console.log("error in query ", error));
+    if (updatedPost) {
+      const allPost = await PostMessage.find();
+      res.status(200).json(allPost);
     }
-}
+  } catch (error) {
+    console.log("error from controller ", error);
+    return res.status(400).send({
+      error: error,
+    });
+  }
+};

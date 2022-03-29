@@ -1,5 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { CREATE_POSTS, DELETE_POSTS, GET_POST, UPDATE_POSTS } from "../constants";
+import {
+  CREATE_POSTS,
+  DELETE_POSTS,
+  GET_POST,
+  UPDATE_POSTS,
+} from "../constants";
 import {
   createPostsFailure,
   createPostsSuccess,
@@ -9,14 +14,19 @@ import {
   updatePostsFailure,
   deletePostsSuccess,
   deletePostsFailure,
-  registerUpdatedPost
+  registerUpdatedPost,
 } from "../actions/posts";
-import { fetchPostsApi, createPostsApi,updatePostsApi, deletePostsApi } from "../../api/Api";
-import {select } from 'redux-saga/effects'
-function* getPostsReq(action) { 
+import {
+  fetchPostsApi,
+  createPostsApi,
+  updatePostsApi,
+  deletePostsApi,
+} from "../../api/Api";
+import { select } from "redux-saga/effects";
+function* getPostsReq(action) {
   try {
     const postsData = yield call(fetchPostsApi, action.payload);
-    let {data} = postsData;
+    let { data } = postsData;
     console.log(data);
     if (postsData.status === 200) {
       yield put(getPostsSuccess(data));
@@ -29,7 +39,7 @@ function* getPostsReq(action) {
 }
 
 function* createPostsReq(action) {
-  try { 
+  try {
     const createPost = yield call(createPostsApi, action.payload);
     let { data } = createPost;
     if (createPost.status === 200) {
@@ -43,16 +53,15 @@ function* createPostsReq(action) {
 }
 
 function* updatePostsReq(action) {
-   
-  debugger
+  debugger;
   // state.map((post)=>post._id !== payload._id ? payload : post);
 
   // console.log(updatePost);
   // yield put (updatePostsSuccess(updatePost));
   try {
-  const updatePost = yield call(updatePostsApi, action.payload);
-  const {data} = updatePost;
-  console.log("updatedPostSaga",updatePost);
+    const updatePost = yield call(updatePostsApi, action.payload);
+    const { data } = updatePost;
+    console.log("updatedPostSaga", updatePost);
     if (updatePost.status === 200) {
       // let  statePayload = yield select((state)=>state?.posts?.payload);
       // console.log('statePayload: ', statePayload);
@@ -64,7 +73,7 @@ function* updatePostsReq(action) {
       //       console.log('cloneData: ', clonePayload);
       //   }
       // yield put(registerUpdatedPost(statePayload));
-      yield put(updatePostsSuccess(data));
+      yield put(getPostsSuccess(data));
     } else {
       yield put(updatePostsFailure(data.message.error));
     }
@@ -73,10 +82,12 @@ function* updatePostsReq(action) {
   }
 }
 
-function* deletePostsReq(action){
+function* deletePostsReq(action) {
   try {
-    debugger
-    const deletePost = yield call(deletePostsApi,action.payload);
+    debugger;
+    const deletePost = yield call(deletePostsApi, action.payload);
+    let { data } = deletePost;
+    yield put(getPostsSuccess(data));
     console.log(deletePost);
     // if(deletePost.status === 200){
     //   yield put(deletePostsSuccess(deletePost));
@@ -88,10 +99,9 @@ function* deletePostsReq(action){
   }
 }
 
-
 export function* allPostRequest() {
- yield takeLatest(GET_POST, getPostsReq);
- yield takeLatest(CREATE_POSTS, createPostsReq);
- yield takeLatest(UPDATE_POSTS, updatePostsReq);
- yield takeLatest(DELETE_POSTS, deletePostsReq);
+  yield takeLatest(GET_POST, getPostsReq);
+  yield takeLatest(CREATE_POSTS, createPostsReq);
+  yield takeLatest(UPDATE_POSTS, updatePostsReq);
+  yield takeLatest(DELETE_POSTS, deletePostsReq);
 }

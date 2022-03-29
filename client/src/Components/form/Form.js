@@ -5,7 +5,7 @@ import useStyle from "./style";
 import { connect, useSelector } from "react-redux";
 import { createPosts, updatePosts, getPosts } from "../../redux/actions/posts";
 
-function Form({ currentId, setCurrentId, createPosts, updatePosts }) {
+function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -17,17 +17,23 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts }) {
   // let getPost = posts;
   // getPost.map((p)=>p.message);
   // console.log(getPost, "getPost");
+
+  // let abc =
+  //   posts?.length > 1 ? posts?.find((data) => data._id == currentId) : null;
+  // debugger;
+
+  
+  // console.log("abc =======> ", abc);
   const post = useSelector((state) =>
-    currentId
-      ? state.data.posts.find((message) => message._id === currentId)
-      : null
+    // currentId ? state.data.posts.find((data) => data._id == currentId) : null
+    state.data.posts?.length  > 1 ? posts?.find((data) => data._id == currentId) : null
   );
-  console.log(post, "post");
-  console.log(currentId);
-  // const post = (currentId ? props.posts.find((message)=>message._id === currentId):null);
+  // console.log(post, "post");
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
+  console.log(currentId);
+  // const post = (currentId ? props.posts.find((message)=>message._id === currentId):null);
 
   const handleSubmite = async (e) => {
     e.preventDefault();
