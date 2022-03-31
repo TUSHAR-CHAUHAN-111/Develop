@@ -72,15 +72,6 @@ export const deletedPosts = async (req, res) => {
 // };
 
 export const updatePosts = async (req, res) => {
-  console.log("in  updatepost api ");
-  // const {id:_id} = req.params;
-  // const postData  = req.body;
-  // if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("no post with that id");
-
-  // const updatedPost = await PostMessage.findByIdAndUpdate(_id,postData,{new:true});
-  // console.log("updatedPost",updatedPost);
-  // res.json(updatedPost);
-  console.log("req.body.updateData: ", req.body);
   try {
     const { title, message, creator, tags, selectedFile, _id } = req.body;
     console.log("req.body.updateData: ", req.body.updateData);
@@ -102,3 +93,22 @@ export const updatePosts = async (req, res) => {
     });
   }
 };
+
+
+export const likePosts = async(req,res) =>{
+  try {
+      const {id} = req.body;
+      const posts = await PostMessage.findById(id);
+      console.log("_id",id);
+      console.log("posts",posts);
+      const post = await PostMessage.findByIdAndUpdate(id ,{likeCount:posts.likeCount + 1});
+      if(post){
+        const allPost = await PostMessage.find();
+        res.status(200).json(allPost);
+      }else{
+        console.log("error in if statement");
+      }
+  } catch (error) {
+    console.log("Error in catch block",error);
+  }
+}

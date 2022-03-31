@@ -4,7 +4,11 @@ import cors from "cors";
 import mongoose from "mongoose";
 import postRouter from "./routes/posts.js";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+
 const app = express();
+
+dotenv.config();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -19,14 +23,17 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+app.get("/",(req,res)=>{
+  res.send("Hello Memories API");
+})
+
+
 app.use("/posts", postRouter);
-const CONNECT_URL =
-  "mongodb+srv://tushar:123@cluster0.riwsm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 const PORT = process.env.PORT || 8000;
 
 mongoose
-  .connect(CONNECT_URL, { useUnifiedTopology: true, useNewUrlParser: true })
+  .connect(process.env.CONNECT_URL, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() =>
     app.listen(PORT, () => console.log(`Server Running on port ${PORT}`))
   )

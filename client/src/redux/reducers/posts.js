@@ -5,6 +5,8 @@ import {
   DELETE_POSTS_SUCCESS,
   GET_POST,
   GET_POST_SUCCESS,
+  LIKE_POSTS,
+  LIKE_POSTS_SUCCESS,
   UPDATE_POSTS,
   UPDATE_POSTS_SUCCESS,
   UPDATE_SINGLE_POST,
@@ -25,9 +27,17 @@ const postReducer = (state = {}, action) => {
     case CREATE_POSTS_SUCCESS:
       return { ...state, posts:action.payload };
 
-    case UPDATE_POSTS:
-      debugger
-      return {...state,posts:action.payload};
+      
+      case UPDATE_POSTS:
+        debugger
+        return {...state,posts:action.payload};
+        
+        case LIKE_POSTS:
+        debugger
+        return {...state,posts:action.payload};
+      case LIKE_POSTS_SUCCESS:
+        debugger
+        return{...state}; 
         // return state.map((post)=>post._id !== payload._id ? payload : post);
     case UPDATE_POSTS_SUCCESS:
       debugger
@@ -43,6 +53,7 @@ const postReducer = (state = {}, action) => {
     //   return state.filter((post)=>post._id !== payload);
     case UPDATE_SINGLE_POST:
         return {...state,posts:action.payload};
+
 
     default:
       return state;

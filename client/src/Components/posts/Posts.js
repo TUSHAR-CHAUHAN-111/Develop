@@ -8,7 +8,7 @@ import { getPosts } from "../../redux/actions/posts";
 function Posts({ posts = [], setCurrentId }) {
   const classes = useStyle();
   console.log("POSTS ", posts);
-  return !posts && !posts || !posts.length > 0 ? (
+  return (!posts && !posts || !posts.length > 0 ? (
     <CircularProgress />
   ) : (
     <Grid
@@ -23,6 +23,7 @@ function Posts({ posts = [], setCurrentId }) {
         </Grid>
       ))}
     </Grid>
+  )
   );
 }
 

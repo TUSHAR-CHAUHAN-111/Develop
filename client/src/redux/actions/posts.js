@@ -96,9 +96,35 @@ export const deletePostsFailure = (error) => {
         payload:error,
     };
 };
+
 export const registerUpdatedPost=(payload)=>{
     return {
         type:types.UPDATE_SINGLE_POST,
         payload
     }
 }
+
+
+
+export const likePosts = (data) => {
+    debugger
+    return {
+        type: types.LIKE_POSTS,
+        payload:data,
+    };
+};
+
+export const likePostsSuccess = (data) => {
+    debugger
+    return {
+        type: types.LIKE_POSTS_SUCCESS,
+        payload:data,
+    };
+};
+
+export const likePostsFailure = (error) => {
+    return {
+        type: types.LIKE_POSTS_FAILURE,
+        payload:error,
+    };
+};

@@ -3,6 +3,7 @@ import {
   CREATE_POSTS,
   DELETE_POSTS,
   GET_POST,
+  LIKE_POSTS,
   UPDATE_POSTS,
 } from "../constants";
 import {
@@ -15,14 +16,16 @@ import {
   deletePostsSuccess,
   deletePostsFailure,
   registerUpdatedPost,
+  likePostsSuccess,
+  likePostsFailure,
 } from "../actions/posts";
 import {
   fetchPostsApi,
   createPostsApi,
   updatePostsApi,
   deletePostsApi,
+  likePostsApi,
 } from "../../api/Api";
-import { select } from "redux-saga/effects";
 function* getPostsReq(action) {
   try {
     const postsData = yield call(fetchPostsApi, action.payload);
@@ -99,9 +102,29 @@ function* deletePostsReq(action) {
   }
 }
 
+function* likePostsReq(action){
+
+  try {
+    debugger
+    const likePost = yield call(likePostsApi,action.payload);
+    const {data} = likePost;
+
+    if(likePost.status === 200){
+      yield put(getPostsSuccess(data));
+    }else{
+      yield put(likePostsFailure(data.error));
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
 export function* allPostRequest() {
   yield takeLatest(GET_POST, getPostsReq);
   yield takeLatest(CREATE_POSTS, createPostsReq);
   yield takeLatest(UPDATE_POSTS, updatePostsReq);
   yield takeLatest(DELETE_POSTS, deletePostsReq);
+  yield takeLatest(LIKE_POSTS, likePostsReq);
 }

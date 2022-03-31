@@ -1,6 +1,6 @@
 import axios from 'axios';
 const collegeInstance = axios.create({
-    baseURL: "http://localhost:8000/posts",
+    baseURL: "https://tushar-memories.herokuapp.com/posts",
 });
   
   export const fetchPostsApi = async (posts) =>
@@ -31,6 +31,13 @@ export const updatePostsApi = async (data) =>
     method: "POST",
     data: data,
     url: "/updatePost",
+});
+
+export const likePostsApi = async (data) =>
+  await collegeInstance.request({
+    method: "POST",
+    data: data,
+    url: "/likePost",
 });
 
 

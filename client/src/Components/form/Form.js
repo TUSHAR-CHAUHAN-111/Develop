@@ -13,21 +13,22 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
     tags: "",
     selectedFile: "",
   });
+  const [editPost,setEditPost] = useState(false);
   const classes = useStyle();
   // let getPost = posts;
   // getPost.map((p)=>p.message);
   // console.log(getPost, "getPost");
 
-  // let abc =
-  //   posts?.length > 1 ? posts?.find((data) => data._id == currentId) : null;
-  // debugger;
+  let post =
+    posts?.length > 0 ? posts?.find((data) => data._id == currentId) : null;
+  debugger;
 
   
   // console.log("abc =======> ", abc);
-  const post = useSelector((state) =>
-    // currentId ? state.data.posts.find((data) => data._id == currentId) : null
-    state.data.posts?.length  > 1 ? posts?.find((data) => data._id == currentId) : null
-  );
+  // const post = useSelector((state) =>
+  //   // currentId ? state.data.posts.find((data) => data._id == currentId) : null
+  //   state.data.posts?.length  > 1 ? posts?.find((data) => data._id == currentId) : null
+  // );
   // console.log(post, "post");
   useEffect(() => {
     if (post) setPostData(post);
@@ -66,7 +67,7 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmite}
       >
-        <Typography variant="h6">Creating A Memory</Typography>
+        <Typography variant="h6">{currentId ? `Editing ${post?.title}`: "Creating A Memory"}</Typography>
         <TextField
           name="creator"
           label="Creator"
@@ -116,6 +117,7 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
         <Button
           className={classes.buttonSubmit}
           variant="contained"
+          style={{marginBottom:"10px"}}
           type="submit"
           color="primary"
           fullWidth
