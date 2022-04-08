@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import postRouter from "./routes/posts.js";
+import userRouter from "./routes/users.js";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
@@ -29,6 +30,7 @@ app.get("/",(req,res)=>{
 
 
 app.use("/posts", postRouter);
+app.use("/users", userRouter);
 
 const PORT = process.env.PORT || 8000;
 

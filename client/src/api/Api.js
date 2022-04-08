@@ -1,58 +1,65 @@
 import axios from 'axios';
-const collegeInstance = axios.create({
-    baseURL: "https://tushar-memories.herokuapp.com/posts",
+const memeriesInstance = axios.create({
+    baseURL: "http://localhost:8000",
 });
   
+memeriesInstance.interceptors.request.use((req)=>{
+    if(localStorage.getItem("profile")){
+      req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token}`;
+    }
+    return req;
+})
+
   export const fetchPostsApi = async (posts) =>
-    await collegeInstance.request({
+    await memeriesInstance.request({
         method: "GET",
         data: posts,
-        url: "/",
+        url: "/posts",
 });
 
 
 export const createPostsApi = async (posts) =>
-  await collegeInstance.request({
+  await memeriesInstance.request({
     method: "POST",
     data: posts,
-    url: "/",
+    url: "/posts",
 });
 
 export const deletePostsApi = async (data) =>
-  await collegeInstance.request({
+  await memeriesInstance.request({
     method: "DELETE",
     data: data,
-    url: "/deletePost",
+    url: "/posts/deletePost",
 });
 
 
 export const updatePostsApi = async (data) =>
-  await collegeInstance.request({
+  await memeriesInstance.request({
     method: "POST",
     data: data,
-    url: "/updatePost",
+    url: "/posts/updatePost",
 });
 
 export const likePostsApi = async (data) =>
-  await collegeInstance.request({
+  await memeriesInstance.request({
     method: "POST",
     data: data,
-    url: "/likePost",
+    url: "/posts/likePost",
+});
+
+export const singInApi = async (data) =>
+  await memeriesInstance.request({
+    method: "POST",
+    data: data,
+    url: "/users/signin",
+});
+
+export const singUpApi = async (data) =>
+  await memeriesInstance.request({
+    method: "POST",
+    data: data,
+    url: "/users/signup",
 });
 
 
-// const url = "http://localhost:8000/posts";
 
-// export const updatePostsApi = (postData,id)=> axios.put(`${collegeInstance}/${id}`,postData);
-// export const updatePostsApi = async (id,postData) =>
-//   await axios
-//     .patch(`http://localhost:8000/posts/${id}`, postData)
-//     .then((res) => res)
-//     .catch((err) => err);
-
-// export const deletePostsApi = async (id) =>
-// await axios
-//   .delete(`http://localhost:8000/posts/deletePost/${id}`)
-//   .then((res) => res)
-//   .catch((err) => err);
-// export const deletePostsApi = (id)=> axios.delete(`${collegeInstance}/${id}`);

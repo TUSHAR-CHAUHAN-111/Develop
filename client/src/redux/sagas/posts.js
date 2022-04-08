@@ -56,11 +56,6 @@ function* createPostsReq(action) {
 }
 
 function* updatePostsReq(action) {
-  debugger;
-  // state.map((post)=>post._id !== payload._id ? payload : post);
-
-  // console.log(updatePost);
-  // yield put (updatePostsSuccess(updatePost));
   try {
     const updatePost = yield call(updatePostsApi, action.payload);
     const { data } = updatePost;
@@ -87,16 +82,10 @@ function* updatePostsReq(action) {
 
 function* deletePostsReq(action) {
   try {
-    debugger;
     const deletePost = yield call(deletePostsApi, action.payload);
     let { data } = deletePost;
     yield put(getPostsSuccess(data));
     console.log(deletePost);
-    // if(deletePost.status === 200){
-    //   yield put(deletePostsSuccess(deletePost));
-    // }else{
-    //   yield put(deletePostsFailure(deletePost));
-    // }
   } catch (error) {
     console.log(error);
   }
@@ -105,7 +94,6 @@ function* deletePostsReq(action) {
 function* likePostsReq(action){
 
   try {
-    debugger
     const likePost = yield call(likePostsApi,action.payload);
     const {data} = likePost;
 

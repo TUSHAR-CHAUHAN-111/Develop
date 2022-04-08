@@ -7,29 +7,16 @@ import { createPosts, updatePosts, getPosts } from "../../redux/actions/posts";
 
 function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
     selectedFile: "",
   });
-  const [editPost,setEditPost] = useState(false);
   const classes = useStyle();
-  // let getPost = posts;
-  // getPost.map((p)=>p.message);
-  // console.log(getPost, "getPost");
-
+  const user =JSON.parse(localStorage.getItem("profile"));
   let post =
     posts?.length > 0 ? posts?.find((data) => data._id == currentId) : null;
-  debugger;
 
-  
-  // console.log("abc =======> ", abc);
-  // const post = useSelector((state) =>
-  //   // currentId ? state.data.posts.find((data) => data._id == currentId) : null
-  //   state.data.posts?.length  > 1 ? posts?.find((data) => data._id == currentId) : null
-  // );
-  // console.log(post, "post");
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
@@ -39,26 +26,34 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
   const handleSubmite = async (e) => {
     e.preventDefault();
     if (currentId) {
-      let newObj = { ...postData };
-      // await props.updateStudent(newObj);
-      await updatePosts(newObj);
-      //  await getPosts();
+      let newObj = { ...postData};
+      await updatePosts({...newObj,name:user?.result?.name });
       clear();
     } else {
-      await createPosts(postData);
+      await createPosts({...postData,name:user?.result?.name});
       clear();
     }
   };
   const clear = () => {
     setCurrentId(0);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
   };
+
+  if(!user?.result?.name){
+    return(
+      <Paper className={classes.paper}>
+          <Typography variant="h6" align="center">
+              Please Sign In to create Your own Memories and like other's Memories.
+          </Typography>
+      </Paper>
+    )
+  }
+
   return (
     <Paper className={classes.paper}>
       <form
@@ -68,16 +63,6 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
         onSubmit={handleSubmite}
       >
         <Typography variant="h6">{currentId ? `Editing ${post?.title}`: "Creating A Memory"}</Typography>
-        <TextField
-          name="creator"
-          label="Creator"
-          variant="outlined"
-          fullWidth
-          value={postData?.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-        />
         <TextField
           name="title"
           label="Title"
@@ -117,7 +102,6 @@ function Form({ currentId, setCurrentId, createPosts, updatePosts, posts }) {
         <Button
           className={classes.buttonSubmit}
           variant="contained"
-          style={{marginBottom:"10px"}}
           type="submit"
           color="primary"
           fullWidth

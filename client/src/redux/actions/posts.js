@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import * as types from "../constants";
 
 export const getPosts = (post) => {
@@ -49,7 +48,6 @@ export const createPostsFailure = (error) => {
 
 
 export const updatePosts = (postData) => {
-    debugger
     return {
         type: types.UPDATE_POSTS,
         payload:postData,
@@ -57,7 +55,6 @@ export const updatePosts = (postData) => {
 };
 
 export const updatePostsSuccess = (postData) => {
-    debugger
     return {
         type: types.UPDATE_POSTS_SUCCESS,
         payload:postData,
@@ -75,7 +72,6 @@ export const updatePostsFailure = (error) => {
 
 
 export const deletePosts = (data) => {
-    debugger
     return {
         type: types.DELETE_POSTS,
         payload:data,
@@ -83,7 +79,6 @@ export const deletePosts = (data) => {
 };
 
 export const deletePostsSuccess = (data) => {
-    debugger
     return {
         type: types.DELETE_POSTS_SUCCESS,
         payload:data,
@@ -107,7 +102,6 @@ export const registerUpdatedPost=(payload)=>{
 
 
 export const likePosts = (data) => {
-    debugger
     return {
         type: types.LIKE_POSTS,
         payload:data,
@@ -115,7 +109,6 @@ export const likePosts = (data) => {
 };
 
 export const likePostsSuccess = (data) => {
-    debugger
     return {
         type: types.LIKE_POSTS_SUCCESS,
         payload:data,

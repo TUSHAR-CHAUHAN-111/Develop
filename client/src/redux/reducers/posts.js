@@ -29,30 +29,19 @@ const postReducer = (state = {}, action) => {
 
       
       case UPDATE_POSTS:
-        debugger
         return {...state,posts:action.payload};
         
         case LIKE_POSTS:
-        debugger
         return {...state,posts:action.payload};
       case LIKE_POSTS_SUCCESS:
-        debugger
         return{...state}; 
-        // return state.map((post)=>post._id !== payload._id ? payload : post);
     case UPDATE_POSTS_SUCCESS:
-      debugger
       return { ...state };
-      // return  state && state.posts.map((post)=>post._id === payload._id ? payload : post);
     
     case DELETE_POSTS:
-      debugger
       return {...state,posts:action.payload};
-      // return state.filter((post)=>post._id !== payload);
-    // case DELETE_POSTS_SUCCESS:
-    //   debugger
-    //   return state.filter((post)=>post._id !== payload);
-    case UPDATE_SINGLE_POST:
-        return {...state,posts:action.payload};
+    // case UPDATE_SINGLE_POST:
+    //     return {...state,posts:action.payload};
 
 
     default:

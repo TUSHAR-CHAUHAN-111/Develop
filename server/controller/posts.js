@@ -13,7 +13,7 @@ export const getPosts = async (req, res) => {
 export const createPosts = async (req, res) => {
   try {
     const post = req.body;
-    const newPost = new PostMessage(post);
+    const newPost = new PostMessage({...post,creator:req.userId,createdAt:new Date().toISOString()});
     await newPost.save();
     const allPost = await PostMessage.find();
     res.status(200).json(allPost);
@@ -98,11 +98,18 @@ export const updatePosts = async (req, res) => {
 export const likePosts = async(req,res) =>{
   try {
       const {id} = req.body;
+      if(!req.userId) return res.json({message:"UNAUTHENTICATED"});
       const posts = await PostMessage.findById(id);
-      console.log("_id",id);
-      console.log("posts",posts);
-      const post = await PostMessage.findByIdAndUpdate(id ,{likeCount:posts.likeCount + 1});
-      if(post){
+      const index = posts.likes.findIndex((id)=> id === String(req.userId));
+      if(index === -1){
+        posts.likes.push(req.userId);
+      }else{
+        posts.likes = posts.likes.filter((id)=>id !== String(req.userId));
+      }
+      // console.log("_id",id);
+      // console.log("posts",posts);
+      const updatedPost = await PostMessage.findByIdAndUpdate(id ,posts);
+      if(updatedPost){
         const allPost = await PostMessage.find();
         res.status(200).json(allPost);
       }else{

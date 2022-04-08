@@ -20,3 +20,15 @@ export const UPDATE_SINGLE_POST= "UPDATE_SINGLE_POST";
 export const LIKE_POSTS = "LIKE_POSTS";
 export const LIKE_POSTS_SUCCESS = "LIKE_POSTS_SUCCESS";
 export const LIKE_POSTS_FAILURE = "LIKE_POSTS_FAILURE";
+
+export const AUTH = "AUTH";
+export const LOGOUT = "LOGOUT";
+
+
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+export const SIGN_IN_FAILURE = "SIGN_IN_FAILURE";
+
+export const SIGN_UP = "SIGN_UP";
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
